@@ -1,0 +1,8 @@
+include:
+  - project: 'randd/templates/ci-cd'
+    ref: '2.0'
+    file: '.gitlab-ci.yml'
+
+testing:
+  script:
+    - ./vendor/bin/phpunit

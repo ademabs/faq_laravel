@@ -1,0 +1,39 @@
+vault:
+  enabled: true
+  url: "https://vault.choco.kz"
+  image: git.chocodev.kz:4567/ops/vault-client:0.0.2
+  secretName: vault-randd-prerelease
+  secretPath: secrets/randd/prerelease/larabase
+
+ingress:
+  enabled: true
+  nginxProxyService: "nginx-proxy-chocodev"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/whitelist-source-range: 78.40.108.185/32, 109.233.109.80/28, 109.233.109.69/32, 185.22.64.128/27
+  hosts:
+    - host: larabase.chocodev.kz
+      paths:
+        - /
+  tls:
+    - secretName: chocodev-tls
+      hosts:
+        - larabase.chocodev.kz
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+cronjobs: []
+# example command
+#cronjobs:
+#  - name: example-command
+#    schedule: "10 1 * * *"
+#    args:
+#      - /bin/sh
+#      - -c
+#      - /usr/bin/php /srv/www/app console event cleanAction
