@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\NoticeException;
+use App\Http\Requests\FaqCreateRequest;
+use App\Http\Requests\FaqUpdateRequest;
 use App\Models\Faq;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,12 @@ class FaqController extends Controller
         return $this->response('All questions', $questions);
     }
 
-    //get questions by category
+    public function allWithTags(){
+        $questions = Faq::with('tags')->get();
+
+        return $this->response('Questions with tags', $questions);
+    }
+
 
     public function get($id)
     {
@@ -24,7 +31,7 @@ class FaqController extends Controller
         return $this->response('Found', $question);
     }
 
-    public function create(Request $request)
+    public function create(FaqCreateRequest $request)
     {
         $data = [
             'category_id' => $request->post('category_id'),
@@ -43,7 +50,7 @@ class FaqController extends Controller
         return $this->response('Added', $newQuestion);
     }
 
-    public function update($id, Request $request)
+    public function update($id, FaqUpdateRequest $request)
     {
         $question = Faq::find($id);
 
