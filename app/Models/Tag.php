@@ -7,9 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tag extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
     ];
 
-    use SoftDeletes;
+    public function faqsTags()
+    {
+        return $this->belongsToMany(Faq::class, 'faqs_tags', 'tag_id', 'faq_id');
+    }
+
 }

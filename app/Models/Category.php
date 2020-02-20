@@ -12,4 +12,9 @@ class Category extends Model
         'sort_weight',
         'icon_url',
     ];
+
+    public function faqs()
+    {
+        return $this->hasMany(Faq::class, 'category_id', 'id');
+    }
 }
