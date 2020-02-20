@@ -25,6 +25,7 @@ class TagCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'faq_id' => 'required|integer',
         ];
     }
 
